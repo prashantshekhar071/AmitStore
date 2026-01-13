@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Failed</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 50px; background-color: #f0f0f0; }
+        .failure { color: red; font-size: 2em; }
+        .details { background: white; padding: 20px; border-radius: 8px; display: inline-block; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1 class="failure">Payment Failed</h1>
+    <div class="details">
+        <p><strong>Order ID:</strong> <span id="orderId"></span></p>
+        <p><strong>Transaction ID:</strong> <span id="txnid"></span></p>
+        <p><strong>Amount:</strong> ₹<span id="amount"></span></p>
+        <p><strong>Product Info:</strong> <span id="productinfo"></span></p>
+        <p><strong>Name:</strong> <span id="firstname"></span></p>
+        <p><strong>Email:</strong> <span id="email"></span></p>
+        <p>Please try again.</p>
+        <a href="/">Back to Store</a>
+    </div>
+
+    <script>
+        // Get query parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        document.getElementById('orderId').textContent = urlParams.get('orderId') || 'N/A';
+        document.getElementById('txnid').textContent = urlParams.get('txnid') || 'N/A';
+        document.getElementById('amount').textContent = urlParams.get('amount') || 'N/A';
+        document.getElementById('productinfo').textContent = urlParams.get('productinfo') || 'N/A';
+        document.getElementById('firstname').textContent = urlParams.get('firstname') || 'N/A';
+        document.getElementById('email').textContent = urlParams.get('email') || 'N/A';
+    </script>
+</body>
+</html>

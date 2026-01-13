@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const crypto = require('crypto');
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(cors());
@@ -10,9 +10,12 @@ app.use(express.json());
 app.use(express.static('.')); // Serve static files like index.html
 
 // PayU Configuration (In production, use environment variables)
-const PAYU_KEY = 'SdqYBK'; // Replace with your PayU merchant key
-const PAYU_SALT = 'Iz32nhUteOVtxXd0lkzwgvJuEBXx1m1H'; // Replace with your PayU salt
+const PAYU_KEY = process.env.PAYU_KEY || 'SdqYBK'; // Replace with your PayU merchant key
+const PAYU_SALT = process.env.PAYU_SALT || 'Iz32nhUteOVtxXd0lkzwgvJuEBXx1m1H'; // Replace with your PayU salt
 const PAYU_BASE_URL = 'https://secure.payu.in/_payment'; // For production, use https://secure.payu.in/_payment
+
+// Base URL for callbacks
+const BASE_URL = process.env.URL || `http://localhost:${PORT}`;
 
 // In-memory user storage (for demo; use DB in production)
 let users = []; // { email, password, name }
@@ -56,8 +59,8 @@ app.post('/order', (req, res) => {
   
   // PayU parameters
   const txnid = orderId;
-  const surl = `http://localhost:3000/payment-success?orderId=${orderId}`; // Success URL
-  const furl = `http://localhost:3000/payment-failure?orderId=${orderId}`; // Failure URL
+  const surl = `${BASE_URL}/payment-success.html?orderId=${orderId}`; // Success URL
+  const furl = `${BASE_URL}/payment-failure.html?orderId=${orderId}`; // Failure URL
   
   // Generate hash (SHA512 of key|txnid|amount|productinfo|firstname|email|||||||||||salt)
   const hashString = `${PAYU_KEY}|${txnid}|${amount}|${productInfo}|${name}|${email}|||||||||||${PAYU_SALT}`;
