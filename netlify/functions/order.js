@@ -3,7 +3,7 @@ const crypto = require('crypto');
 // PayU Configuration (In production, use environment variables)
 const PAYU_KEY = process.env.PAYU_KEY || 'SdqYBK'; // Replace with your PayU merchant key
 const PAYU_SALT = process.env.PAYU_SALT || 'Iz32nhUteOVtxXd0lkzwgvJuEBXx1m1H'; // Replace with your PayU salt
-const PAYU_BASE_URL = 'https://secure.payu.in/_payment'; // For production, use https://secure.payu.in/_payment
+const PAYU_BASE_URL = process.env.PAYU_BASE_URL || 'https://test.payu.in/_payment'; // Use test URL for test keys
 
 // Base URL for callbacks
 const BASE_URL = process.env.URL || 'http://localhost:3000';
